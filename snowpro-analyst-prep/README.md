@@ -26,24 +26,35 @@ A certificação SnowPro Advanced: Data Analyst valida habilidades avançadas em
 - 💻 Exame supervisionado online
 - 📚 Pré-requisito: SnowPro Core Certification
 
-## 📊 Conteúdo do Sistema
+## 📊 Conteúdo do Sistema - Cobertura 100%
 
 | Recurso | Quantidade |
 |---------|------------|
-| **Flashcards** | 78 cards (com spaced repetition SM-2) |
-| **Questões de Quiz** | 116 questões no formato do exame |
+| **Flashcards** | 143 cards (com spaced repetition SM-2) |
+| **Questões de Quiz** | 171 questões no formato do exame |
 | **Domínios** | 6 domínios oficiais do exame |
 | **Tópicos** | 21 tópicos detalhados |
-| **Objetivos Mapeados** | 32 objetivos oficiais com 150+ sub-objetivos |
+| **Objetivos Mapeados** | 18 objetivos com 100+ sub-objetivos |
+| **Matriz de Cobertura** | Cada objetivo rastreado para flashcards/questões específicos |
+
+### 🎯 Garantia de Cobertura 100%
+
+Este sistema foi meticulosamente desenvolvido para cobrir **TODOS** os objetivos do exame oficial:
+
+- ✅ Todos os sub-objetivos do guia oficial mapeados
+- ✅ Flashcards específicos para cada conceito
+- ✅ Questões que testam cada objetivo
+- ✅ Matriz de rastreabilidade em `src/data/coverage-matrix.ts`
 
 ## ✨ Funcionalidades
 
 ### 📚 Flashcards com Spaced Repetition
 - Sistema SM-2 para memorização eficiente
-- 78 cards cobrindo todos os objetivos do exame
+- **143 cards** cobrindo 100% dos objetivos do exame
 - Cards organizados por domínio e tópico
 - Avaliação de dificuldade (Fácil/Médio/Difícil)
 - Revisão programada baseada na sua performance
+- Exemplos de código SQL em cada card
 
 ### 📝 Quizzes
 - Questões no formato do exame
@@ -121,44 +132,104 @@ src/
     └── index.ts
 ```
 
-## 🎓 Conteúdo Coberto
+## 🎓 Cobertura Completa dos Objetivos
 
-### Domínio 1: SQL & Query Fundamentals (20%)
-- Funções de janela (ROW_NUMBER, RANK, LAG, LEAD)
-- CTEs e CTEs recursivas
-- JOINs avançados (LATERAL JOIN)
-- QUALIFY clause
-- Query optimization
+### Domínio 1: SQL & Query Fundamentals (20-25%)
+- ✅ Window functions (ROW_NUMBER, RANK, DENSE_RANK, NTILE, LAG, LEAD, FIRST_VALUE, LAST_VALUE)
+- ✅ QUALIFY clause
+- ✅ Frame specifications (ROWS BETWEEN, RANGE BETWEEN)
+- ✅ String functions (LISTAGG, SPLIT_PART, REGEXP_*)
+- ✅ Date/time functions (DATEADD, DATEDIFF, DATE_TRUNC)
+- ✅ Conversion functions (CAST, TRY_CAST, TO_*)
+- ✅ Hash functions (HASH, MD5, SHA2)
+- ✅ Conditional expressions (CASE, IFF, COALESCE, NVL, NVL2, NULLIF)
+- ✅ Approximate functions (APPROX_COUNT_DISTINCT, HLL)
+- ✅ Percentile functions (MEDIAN, PERCENTILE_CONT, PERCENTILE_DISC)
+- ✅ GENERATOR e SEQ functions
+- ✅ CTEs e CTEs recursivas
+- ✅ JOINs avançados (LATERAL, ASOF, NATURAL)
+- ✅ CONNECT BY para queries hierárquicas
+- ✅ Query Profile interpretation
+- ✅ EXPLAIN e SAMPLE
 
-### Domínio 2: Data Analysis & Transformation (25%)
-- Dados semi-estruturados (VARIANT, FLATTEN)
-- PIVOT e UNPIVOT
-- Análise de séries temporais
-- GROUPING SETS, CUBE, ROLLUP
+### Domínio 2: Data Analysis & Transformation (25-30%)
+- ✅ VARIANT, OBJECT, ARRAY data types
+- ✅ FLATTEN e LATERAL FLATTEN (OUTER parameter)
+- ✅ PARSE_JSON e TRY_PARSE_JSON
+- ✅ OBJECT_CONSTRUCT e ARRAY_CONSTRUCT
+- ✅ Array/Object functions
+- ✅ PIVOT e UNPIVOT
+- ✅ GROUPING SETS, CUBE, ROLLUP
+- ✅ Moving averages e running totals
+- ✅ Time series analysis
+- ✅ Snowsight Charts e Dashboards
+- ✅ Context functions (CURRENT_*)
 
-### Domínio 3: Data Loading & Unloading (15%)
-- Stages (User, Table, Named, External)
-- COPY INTO com transformações
-- Snowpipe para ingestão contínua
-- File formats
+### Domínio 3: Data Loading & Pipelines (15-20%)
+- ✅ Stages (User, Table, Named, External)
+- ✅ File formats (CSV, JSON, Parquet, Avro, ORC)
+- ✅ Storage integrations
+- ✅ Directory tables e External tables
+- ✅ COPY INTO com transformações
+- ✅ Error handling (ON_ERROR options)
+- ✅ VALIDATION_MODE e MATCH_BY_COLUMN_NAME
+- ✅ Schema evolution
+- ✅ MERGE e Multi-table INSERT
+- ✅ METADATA$ columns
+- ✅ Snowpipe (auto-ingest)
+- ✅ Streams (CDC) e Tasks
+- ✅ Task dependencies (DAGs)
+- ✅ Data pipeline patterns
 
-### Domínio 4: Snowflake Objects & Architecture (15%)
-- Views, Secure Views, Materialized Views
-- Stored Procedures e UDFs
-- Streams e Tasks para CDC
-- Time Travel e Fail-safe
+### Domínio 4: Data Management & Security (15-20%)
+- ✅ RBAC (roles e privileges)
+- ✅ Dynamic data masking
+- ✅ Row access policies
+- ✅ Object tagging
+- ✅ Network policies
+- ✅ Column-level security
+- ✅ Views (regular, secure, materialized)
+- ✅ Stored procedures (SQL, JavaScript, Python)
+- ✅ UDFs (scalar, table) e External functions
+- ✅ Sequences e identity columns
+- ✅ Transactions
+- ✅ Caller rights vs owner rights
+- ✅ Snowflake scripting
+- ✅ Variables e bindings
+- ✅ Time Travel e Fail-safe
+- ✅ UNDROP command
+- ✅ Cloning (zero-copy)
+- ✅ Replication e failover
 
-### Domínio 5: Data Visualization & Reporting (15%)
-- Snowsight Dashboards
-- Worksheets e Query Results
-- Integração com BI tools
-- Result caching
+### Domínio 5: Snowflake Ecosystem (10-15%)
+- ✅ INFORMATION_SCHEMA views
+- ✅ ACCOUNT_USAGE schema
+- ✅ SHOW e DESCRIBE commands
+- ✅ RESULT_SCAN e LAST_QUERY_ID
+- ✅ Access history e lineage
+- ✅ Alerts
+- ✅ SYSTEM$ functions
+- ✅ Data shares (provider e consumer)
+- ✅ Reader accounts
+- ✅ Marketplace
+- ✅ Data Clean Rooms
+- ✅ Native Apps
 
-### Domínio 6: Performance & Cost Optimization (10%)
-- Virtual Warehouses sizing
-- Clustering e micro-partitions
-- Resource Monitors
-- Query Profile analysis
+### Domínio 6: Performance & Cost Optimization (10-15%)
+- ✅ Warehouse sizing e scaling
+- ✅ Multi-cluster warehouses
+- ✅ Scaling policies (STANDARD vs ECONOMY)
+- ✅ Auto-suspend e auto-resume
+- ✅ Resource monitors
+- ✅ Serverless compute
+- ✅ Snowpark-optimized warehouses
+- ✅ Credits e billing
+- ✅ Micro-partitions
+- ✅ Clustering keys e automatic clustering
+- ✅ Search optimization service
+- ✅ Query Acceleration Service
+- ✅ Caching (metadata, result, data)
+- ✅ Performance best practices
 
 ## 📖 Recursos de Estudo Recomendados
 

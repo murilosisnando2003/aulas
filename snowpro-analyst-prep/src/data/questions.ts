@@ -478,9 +478,15 @@ export const questions: Question[] = [
 
 import { questionsExtended } from './questions-extended';
 import { questionsComplete } from './questions-complete';
+import { questionsFullCoverage } from './questions-full-coverage';
 
-// Combina todas as questões
-const allQuestions = [...questions, ...questionsExtended, ...questionsComplete];
+// Combina todas as questões para cobertura 100%
+const allQuestions = [
+  ...questions,
+  ...questionsExtended,
+  ...questionsComplete,
+  ...questionsFullCoverage,
+];
 
 export const getQuestionsByDomain = (domainId: string): Question[] => {
   return allQuestions.filter((q) => q.domainId === domainId);

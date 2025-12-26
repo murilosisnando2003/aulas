@@ -1103,9 +1103,19 @@ WHERE START_TIME > DATEADD('day', -30, CURRENT_DATE);
 
 import { flashcardsExtended } from './flashcards-extended';
 import { flashcardsComplete } from './flashcards-complete';
+import { flashcardsFullCoverage } from './flashcards-full-coverage';
+import { flashcardsFullCoverage2 } from './flashcards-full-coverage-2';
+import { flashcardsFullCoverage3 } from './flashcards-full-coverage-3';
 
-// Combina todos os flashcards
-const allFlashcards = [...flashcards, ...flashcardsExtended, ...flashcardsComplete];
+// Combina todos os flashcards para cobertura 100%
+const allFlashcards = [
+  ...flashcards,
+  ...flashcardsExtended,
+  ...flashcardsComplete,
+  ...flashcardsFullCoverage,
+  ...flashcardsFullCoverage2,
+  ...flashcardsFullCoverage3,
+];
 
 export const getFlashcardsByDomain = (domainId: string): Flashcard[] => {
   return allFlashcards.filter((f) => f.domainId === domainId);
