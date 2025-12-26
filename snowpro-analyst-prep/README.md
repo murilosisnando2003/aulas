@@ -26,10 +26,21 @@ A certificação SnowPro Advanced: Data Analyst valida habilidades avançadas em
 - 💻 Exame supervisionado online
 - 📚 Pré-requisito: SnowPro Core Certification
 
+## 📊 Conteúdo do Sistema
+
+| Recurso | Quantidade |
+|---------|------------|
+| **Flashcards** | 78 cards (com spaced repetition SM-2) |
+| **Questões de Quiz** | 116 questões no formato do exame |
+| **Domínios** | 6 domínios oficiais do exame |
+| **Tópicos** | 21 tópicos detalhados |
+| **Objetivos Mapeados** | 32 objetivos oficiais com 150+ sub-objetivos |
+
 ## ✨ Funcionalidades
 
 ### 📚 Flashcards com Spaced Repetition
 - Sistema SM-2 para memorização eficiente
+- 78 cards cobrindo todos os objetivos do exame
 - Cards organizados por domínio e tópico
 - Avaliação de dificuldade (Fácil/Médio/Difícil)
 - Revisão programada baseada na sua performance

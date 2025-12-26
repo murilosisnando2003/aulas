@@ -477,9 +477,10 @@ export const questions: Question[] = [
 ];
 
 import { questionsExtended } from './questions-extended';
+import { questionsComplete } from './questions-complete';
 
-// Combina questions base com questions estendidos
-const allQuestions = [...questions, ...questionsExtended];
+// Combina todas as questões
+const allQuestions = [...questions, ...questionsExtended, ...questionsComplete];
 
 export const getQuestionsByDomain = (domainId: string): Question[] => {
   return allQuestions.filter((q) => q.domainId === domainId);

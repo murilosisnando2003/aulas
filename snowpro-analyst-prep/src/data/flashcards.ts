@@ -1102,9 +1102,10 @@ WHERE START_TIME > DATEADD('day', -30, CURRENT_DATE);
 ];
 
 import { flashcardsExtended } from './flashcards-extended';
+import { flashcardsComplete } from './flashcards-complete';
 
-// Combina flashcards base com flashcards estendidos
-const allFlashcards = [...flashcards, ...flashcardsExtended];
+// Combina todos os flashcards
+const allFlashcards = [...flashcards, ...flashcardsExtended, ...flashcardsComplete];
 
 export const getFlashcardsByDomain = (domainId: string): Flashcard[] => {
   return allFlashcards.filter((f) => f.domainId === domainId);
