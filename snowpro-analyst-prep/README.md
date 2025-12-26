@@ -94,15 +94,37 @@ Acesse [http://localhost:3000](http://localhost:3000)
 
 ### Deploy na Vercel
 
-1. Faça push do código para um repositório Git
-2. Importe o projeto na [Vercel](https://vercel.com)
-3. Deploy automático!
+**Opção 1: Via Dashboard (Recomendado)**
+
+1. Acesse [vercel.com](https://vercel.com) e faça login
+2. Clique em "Add New Project"
+3. Importe o repositório Git
+4. **Importante**: Configure o "Root Directory" como `snowpro-analyst-prep`
+5. Clique em "Deploy"
+6. Pronto! 🎉
+
+**Opção 2: Via CLI**
 
 ```bash
-# Ou use o CLI da Vercel
+cd snowpro-analyst-prep
+
+# Instale a CLI da Vercel
 npm i -g vercel
+
+# Login
+vercel login
+
+# Deploy
 vercel
+
+# Para produção
+vercel --prod
 ```
+
+**Configurações do Projeto**:
+- Framework Preset: Next.js
+- Node.js Version: 18.x ou superior
+- Root Directory: `snowpro-analyst-prep`
 
 ## 📁 Estrutura do Projeto
 
