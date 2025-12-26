@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'SnowPro Advanced: Data Analyst - Preparação',
+  title: 'SnowPro Advanced: Data Analyst - Preparação para Certificação',
   description:
-    'Sistema de preparação para a certificação SnowPro Advanced: Data Analyst da Snowflake. Flashcards, quizzes e conteúdo de estudo.',
+    'Sistema completo de preparação para a certificação SnowPro Advanced: Data Analyst da Snowflake. 143 flashcards, 171 questões e conteúdo com 100% de cobertura do exame.',
   keywords: [
     'Snowflake',
     'SnowPro',
@@ -24,7 +24,26 @@ export const metadata: Metadata = {
     'Certification',
     'SQL',
     'Data Engineering',
+    'Flashcards',
+    'Quiz',
+    'Exame',
+    'Preparação',
   ],
+  authors: [{ name: 'SnowPro Prep' }],
+  icons: {
+    icon: '/favicon.svg',
+  },
+  openGraph: {
+    title: 'SnowPro Advanced: Data Analyst - Preparação',
+    description: 'Sistema de preparação com 143 flashcards e 171 questões para a certificação Snowflake.',
+    type: 'website',
+    locale: 'pt_BR',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SnowPro Advanced: Data Analyst - Preparação',
+    description: 'Sistema de preparação com cobertura 100% do exame Snowflake.',
+  },
 };
 
 export default function RootLayout({
