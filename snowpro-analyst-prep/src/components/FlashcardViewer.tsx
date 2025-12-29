@@ -33,13 +33,13 @@ export default function FlashcardViewer({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full max-w-full md:max-w-3xl mx-auto">
       {showProgress && (
-        <div className="mb-4 flex items-center justify-between text-sm text-gray-500">
-          <span>
+        <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm text-gray-500">
+          <span className="flex-1">
             Card {showProgress.current} de {showProgress.total}
           </span>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {flashcard.tags.map((tag) => (
               <span
                 key={tag}
@@ -53,9 +53,8 @@ export default function FlashcardViewer({
       )}
 
       <div
-        className="relative cursor-pointer perspective-1000"
+        className="relative cursor-pointer perspective-1000 min-h-[280px] sm:min-h-[340px] md:min-h-[400px]"
         onClick={handleFlip}
-        style={{ minHeight: '400px' }}
       >
         <div
           className={`absolute inset-0 transition-transform duration-500 transform-style-3d ${
@@ -128,22 +127,22 @@ export default function FlashcardViewer({
           <p className="text-gray-600 text-sm">
             Como foi sua lembrança?
           </p>
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
             <button
               onClick={() => handleRate(1)}
-              className="px-6 py-3 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors"
+              className="px-6 py-3 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors w-full sm:w-auto"
             >
               Difícil
             </button>
             <button
               onClick={() => handleRate(3)}
-              className="px-6 py-3 bg-yellow-500 text-white rounded-lg font-medium hover:bg-yellow-600 transition-colors"
+              className="px-6 py-3 bg-yellow-500 text-white rounded-lg font-medium hover:bg-yellow-600 transition-colors w-full sm:w-auto"
             >
               Médio
             </button>
             <button
               onClick={() => handleRate(5)}
-              className="px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors"
+              className="px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors w-full sm:w-auto"
             >
               Fácil
             </button>

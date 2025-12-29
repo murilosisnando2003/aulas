@@ -31,7 +31,7 @@ export default function ProgressPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Seu Progresso</h1>
           <p className="text-gray-600">
@@ -40,7 +40,7 @@ export default function ProgressPage() {
         </div>
         <button
           onClick={handleReset}
-          className="px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+          className="px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors self-start sm:self-auto"
         >
           Resetar Progresso
         </button>

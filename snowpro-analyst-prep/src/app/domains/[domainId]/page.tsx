@@ -45,9 +45,9 @@ export default function DomainPage({ params }: DomainPageProps) {
         >
           ← Voltar para domínios
         </Link>
-        <div className="flex items-start justify-between">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
+        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+          <div className="space-y-2">
+            <div className="flex items-center gap-3">
               <div
                 className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold"
                 style={{ backgroundColor: domain.color }}
@@ -58,7 +58,7 @@ export default function DomainPage({ params }: DomainPageProps) {
             </div>
             <p className="text-gray-600">{domain.description}</p>
           </div>
-          <div className="text-right">
+          <div className="text-left lg:text-right">
             <div className="text-3xl font-bold text-gray-900">{mastery}%</div>
             <div className="text-sm text-gray-500">Domínio</div>
           </div>

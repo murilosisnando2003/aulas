@@ -105,12 +105,12 @@ function QuizContent() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Número de Questões
                 </label>
-                <div className="flex gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {[5, 10, 15, 20].map((count) => (
                     <button
                       key={count}
                       onClick={() => setQuestionCount(Math.min(count, availableQuestions))}
-                      className={`flex-1 px-4 py-3 rounded-lg font-medium transition-colors ${
+                      className={`w-full px-4 py-3 rounded-lg font-medium transition-colors ${
                         questionCount === count || (count > availableQuestions && questionCount === availableQuestions)
                           ? 'bg-blue-600 text-white'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -255,7 +255,7 @@ function QuizContent() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Quiz</h1>
           <p className="text-gray-600">
