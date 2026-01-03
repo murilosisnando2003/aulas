@@ -39,16 +39,22 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
-              href="/flashcards"
+              href="/exam-simulator"
               className="px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
             >
-              Começar Flashcards
+              🎯 Simulado Real (65 questões)
+            </Link>
+            <Link
+              href="/flashcards"
+              className="px-6 py-3 bg-white/20 text-white rounded-lg font-semibold hover:bg-white/30 transition-colors"
+            >
+              Flashcards
             </Link>
             <Link
               href="/quiz"
               className="px-6 py-3 bg-white/20 text-white rounded-lg font-semibold hover:bg-white/30 transition-colors"
             >
-              Fazer Quiz
+              Quiz Rápido
             </Link>
           </div>
         </div>
@@ -163,7 +169,33 @@ export default function Home() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Link href="/exam-simulator" className="group">
+          <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl shadow-lg p-8 border border-blue-500 hover:shadow-xl transition-shadow">
+            <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-white/30 transition-colors">
+              <svg
+                className="w-7 h-7 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">
+              🎯 Simulado Real
+            </h3>
+            <p className="text-white/80">
+              65 questões, 115 min - exatamente como o exame real DAA-C01.
+            </p>
+          </div>
+        </Link>
+
         <Link href="/flashcards" className="group">
           <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 hover:shadow-xl transition-shadow">
             <div className="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors">
@@ -185,7 +217,7 @@ export default function Home() {
               Flashcards
             </h3>
             <p className="text-gray-500">
-              {flashcards.length} cards com spaced repetition para memorização eficiente.
+              {flashcards.length} cards com spaced repetition.
             </p>
           </div>
         </Link>
@@ -207,9 +239,9 @@ export default function Home() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Quiz</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">Quiz Rápido</h3>
             <p className="text-gray-500">
-              {questions.length} questões no formato do exame para praticar.
+              {questions.length} questões - escolha quantas quiser.
             </p>
           </div>
         </Link>
@@ -235,7 +267,7 @@ export default function Home() {
               Progresso
             </h3>
             <p className="text-gray-500">
-              Acompanhe seu progresso e identifique áreas para melhorar.
+              Acompanhe seu desempenho e áreas para melhorar.
             </p>
           </div>
         </Link>
@@ -243,3 +275,4 @@ export default function Home() {
     </div>
   );
 }
+

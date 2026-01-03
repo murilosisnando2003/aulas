@@ -479,6 +479,7 @@ export const questions: Question[] = [
 import { questionsExtended } from './questions-extended';
 import { questionsComplete } from './questions-complete';
 import { questionsFullCoverage } from './questions-full-coverage';
+import { questionsExamRealistic } from './questions-exam-realistic';
 
 // Combina todas as questões para cobertura 100%
 const allQuestions = [
@@ -486,6 +487,7 @@ const allQuestions = [
   ...questionsExtended,
   ...questionsComplete,
   ...questionsFullCoverage,
+  ...questionsExamRealistic,
 ];
 
 export const getQuestionsByDomain = (domainId: string): Question[] => {
@@ -496,10 +498,112 @@ export const getQuestionsByTopic = (topicId: string): Question[] => {
   return allQuestions.filter((q) => q.topicId === topicId);
 };
 
+// Fisher-Yates shuffle - algoritmo de randomização verdadeiro
+const fisherYatesShuffle = <T>(array: T[]): T[] => {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+};
+
+// Pesos dos domínios do exame real DAA-C01
+const DOMAIN_WEIGHTS: Record<string, number> = {
+  'domain-1': 28, // Snowflake SQL for Data Analysis
+  'domain-2': 18, // Semi-Structured Data
+  'domain-3': 17, // Data Loading & Unloading
+  'domain-4': 17, // Snowflake Objects & Architecture
+  'domain-5': 10, // Visualization, Sharing & Collaboration
+  'domain-6': 10, // Performance & Cost Optimization
+};
+
+// Gera questões com distribuição proporcional aos pesos do exame real
 export const getRandomQuestions = (count: number, domainId?: string): Question[] => {
+  if (domainId) {
+    // Se domínio específico, apenas randomiza as questões desse domínio
+    const domainQuestions = allQuestions.filter((q) => q.domainId === domainId);
+    return fisherYatesShuffle(domainQuestions).slice(0, Math.min(count, domainQuestions.length));
+  }
+
+  // Distribuição proporcional por domínio para simular exame real
+  const totalWeight = Object.values(DOMAIN_WEIGHTS).reduce((a, b) => a + b, 0);
+  const questionsPerDomain: Record<string, number> = {};
+  let totalAllocated = 0;
+
+  // Calcula quantidade de questões por domínio
+  Object.entries(DOMAIN_WEIGHTS).forEach(([domain, weight]) => {
+    const qty = Math.round((weight / totalWeight) * count);
+    questionsPerDomain[domain] = qty;
+    totalAllocated += qty;
+  });
+
+  // Ajusta se houver diferença por arredondamento
+  if (totalAllocated !== count) {
+    const diff = count - totalAllocated;
+    const sortedDomains = Object.keys(DOMAIN_WEIGHTS).sort((a, b) => DOMAIN_WEIGHTS[b] - DOMAIN_WEIGHTS[a]);
+    questionsPerDomain[sortedDomains[0]] += diff;
+  }
+
+  // Seleciona questões aleatórias de cada domínio
+  const selectedQuestions: Question[] = [];
+  
+  Object.entries(questionsPerDomain).forEach(([domain, qty]) => {
+    const domainQuestions = allQuestions.filter((q) => q.domainId === domain);
+    const shuffled = fisherYatesShuffle(domainQuestions);
+    selectedQuestions.push(...shuffled.slice(0, Math.min(qty, shuffled.length)));
+  });
+
+  // Se não tivermos questões suficientes, completa com qualquer questão disponível
+  if (selectedQuestions.length < count) {
+    const remainingIds = new Set(selectedQuestions.map((q) => q.id));
+    const remaining = allQuestions.filter((q) => !remainingIds.has(q.id));
+    const shuffledRemaining = fisherYatesShuffle(remaining);
+    selectedQuestions.push(...shuffledRemaining.slice(0, count - selectedQuestions.length));
+  }
+
+  // Shuffle final para misturar ordem dos domínios
+  return fisherYatesShuffle(selectedQuestions);
+};
+
+// Gera questões priorizando as menos vistas (para cobertura completa)
+export const getSmartRandomQuestions = (
+  count: number,
+  viewedQuestionIds: string[] = [],
+  domainId?: string
+): Question[] => {
   const filtered = domainId ? allQuestions.filter((q) => q.domainId === domainId) : allQuestions;
-  const shuffled = [...filtered].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+  
+  // Separa questões não vistas e já vistas
+  const notViewed = filtered.filter((q) => !viewedQuestionIds.includes(q.id));
+  const viewed = filtered.filter((q) => viewedQuestionIds.includes(q.id));
+  
+  // Prioriza questões não vistas
+  const shuffledNotViewed = fisherYatesShuffle(notViewed);
+  const shuffledViewed = fisherYatesShuffle(viewed);
+  
+  // Combina: primeiro as não vistas, depois as vistas
+  const combined = [...shuffledNotViewed, ...shuffledViewed];
+  
+  return combined.slice(0, Math.min(count, combined.length));
+};
+
+// Gera questões para simulado real com distribuição exata do exame
+export const getExamQuestions = (count: number = 65): Question[] => {
+  // Garante distribuição proporcional exata
+  return getRandomQuestions(count);
+};
+
+// Estatísticas do banco de questões
+export const getQuestionStats = () => {
+  const stats: Record<string, number> = {};
+  allQuestions.forEach((q) => {
+    stats[q.domainId] = (stats[q.domainId] || 0) + 1;
+  });
+  return {
+    total: allQuestions.length,
+    byDomain: stats,
+  };
 };
 
 export { allQuestions };

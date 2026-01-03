@@ -18,21 +18,38 @@ function QuizContent() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedDomain, setSelectedDomain] = useState<string>(domainId || 'all');
   const [questionCount, setQuestionCount] = useState(10);
+  const [customCount, setCustomCount] = useState('');
+  const [shuffleOptions, setShuffleOptions] = useState(true);
   const [isStarted, setIsStarted] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [sessionStats, setSessionStats] = useState({ correct: 0, incorrect: 0 });
 
   const startQuiz = useCallback(() => {
-    const selected =
+    let selected =
       selectedDomain === 'all'
         ? getRandomQuestions(questionCount)
         : getRandomQuestions(questionCount, selectedDomain);
+    
+    // Embaralha as opções de cada questão se habilitado
+    if (shuffleOptions) {
+      selected = selected.map((q) => {
+        const optionsWithIndex = q.options.map((opt, idx) => ({ opt, idx }));
+        const shuffled = [...optionsWithIndex].sort(() => Math.random() - 0.5);
+        const newCorrectAnswer = shuffled.findIndex((o) => o.idx === q.correctAnswer);
+        return {
+          ...q,
+          options: shuffled.map((o) => o.opt),
+          correctAnswer: newCorrectAnswer,
+        };
+      });
+    }
+    
     setCurrentQuestions(selected);
     setCurrentIndex(0);
     setIsStarted(true);
     setIsComplete(false);
     setSessionStats({ correct: 0, incorrect: 0 });
-  }, [selectedDomain, questionCount]);
+  }, [selectedDomain, questionCount, shuffleOptions]);
 
   const handleAnswer = (selectedAnswer: number, correct: boolean) => {
     const currentQuestion = currentQuestions[currentIndex];
@@ -105,13 +122,16 @@ function QuizContent() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Número de Questões
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {[5, 10, 15, 20].map((count) => (
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                  {[5, 10, 20, 30, 50].map((count) => (
                     <button
                       key={count}
-                      onClick={() => setQuestionCount(Math.min(count, availableQuestions))}
+                      onClick={() => {
+                        setQuestionCount(Math.min(count, availableQuestions));
+                        setCustomCount('');
+                      }}
                       className={`w-full px-4 py-3 rounded-lg font-medium transition-colors ${
-                        questionCount === count || (count > availableQuestions && questionCount === availableQuestions)
+                        questionCount === count && !customCount
                           ? 'bg-blue-600 text-white'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       } ${count > availableQuestions ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -121,9 +141,50 @@ function QuizContent() {
                     </button>
                   ))}
                 </div>
+                
+                {/* Custom count input */}
+                <div className="mt-3 flex items-center gap-3">
+                  <input
+                    type="number"
+                    min="1"
+                    max={availableQuestions}
+                    value={customCount}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setCustomCount(val);
+                      const num = parseInt(val, 10);
+                      if (!isNaN(num) && num > 0 && num <= availableQuestions) {
+                        setQuestionCount(num);
+                      }
+                    }}
+                    placeholder="Ou digite um número..."
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-500 whitespace-nowrap">
+                    Máx: {availableQuestions}
+                  </span>
+                </div>
                 <p className="text-sm text-gray-500 mt-2">
-                  {availableQuestions} questões disponíveis
+                  {availableQuestions} questões disponíveis | Selecionadas: <strong>{questionCount}</strong>
                 </p>
+              </div>
+
+              {/* Shuffle Options */}
+              <div className="flex items-center gap-3">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={shuffleOptions}
+                    onChange={(e) => setShuffleOptions(e.target.checked)}
+                    className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm font-medium text-gray-700">
+                    Embaralhar ordem das alternativas
+                  </span>
+                </label>
+                <span className="text-xs text-gray-500">
+                  (recomendado para simular prova real)
+                </span>
               </div>
 
               {/* Start Button */}
@@ -232,6 +293,12 @@ function QuizContent() {
               >
                 Novo Quiz
               </button>
+              <Link
+                href="/exam-simulator"
+                className="px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors"
+              >
+                Simulado Real (65 questões)
+              </Link>
               <Link
                 href="/flashcards"
                 className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
