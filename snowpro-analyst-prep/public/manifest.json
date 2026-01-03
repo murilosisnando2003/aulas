@@ -1,0 +1,20 @@
+{
+  "name": "SnowPro Data Analyst Prep",
+  "short_name": "SnowPro Prep",
+  "description": "Preparação completa para certificação Snowflake DAA-C01",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#29B5E8",
+  "orientation": "portrait-primary",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
