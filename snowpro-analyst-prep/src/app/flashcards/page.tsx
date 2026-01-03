@@ -113,13 +113,15 @@ function FlashcardsContent() {
 
   if (state.cards.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-8 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">
-          Nenhum flashcard disponível
-        </h1>
-        <Link href="/domains" className="text-blue-600 hover:underline">
-          Voltar para domínios
-        </Link>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+        <div className="container mx-auto px-4 py-8 text-center">
+          <h1 className="text-2xl font-bold text-slate-900 mb-4">
+            Nenhum flashcard disponível
+          </h1>
+          <Link href="/domains" className="text-blue-600 hover:underline font-medium">
+            Voltar para domínios
+          </Link>
+        </div>
       </div>
     );
   }
@@ -127,71 +129,73 @@ function FlashcardsContent() {
   // Complete Screen - Mobile Optimized
   if (state.isComplete) {
     return (
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-8">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-              <svg
-                className="w-8 h-8 sm:w-10 sm:h-10 text-green-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-4">
-              Sessão Completa!
-            </h1>
-            <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">
-              Você estudou {state.sessionStats.studied} flashcards.
-            </p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-8 border border-slate-200">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <svg
+                  className="w-8 h-8 sm:w-10 sm:h-10 text-green-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 sm:mb-4">
+                Sessão Completa!
+              </h1>
+              <p className="text-slate-600 mb-4 sm:mb-6 text-sm sm:text-base">
+                Você estudou {state.sessionStats.studied} flashcards.
+              </p>
 
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-8">
-              <div className="bg-green-50 rounded-lg sm:rounded-xl p-2 sm:p-4">
-                <div className="text-xl sm:text-2xl font-bold text-green-600">
-                  {state.sessionStats.easy}
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-8">
+                <div className="bg-green-50 rounded-lg sm:rounded-xl p-2 sm:p-4 border border-green-200">
+                  <div className="text-xl sm:text-2xl font-bold text-green-600">
+                    {state.sessionStats.easy}
+                  </div>
+                  <div className="text-xs sm:text-sm text-green-700 font-medium">Fáceis</div>
                 </div>
-                <div className="text-xs sm:text-sm text-green-700">Fáceis</div>
-              </div>
-              <div className="bg-yellow-50 rounded-lg sm:rounded-xl p-2 sm:p-4">
-                <div className="text-xl sm:text-2xl font-bold text-yellow-600">
-                  {state.sessionStats.medium}
+                <div className="bg-yellow-50 rounded-lg sm:rounded-xl p-2 sm:p-4 border border-yellow-200">
+                  <div className="text-xl sm:text-2xl font-bold text-yellow-600">
+                    {state.sessionStats.medium}
+                  </div>
+                  <div className="text-xs sm:text-sm text-yellow-700 font-medium">Médios</div>
                 </div>
-                <div className="text-xs sm:text-sm text-yellow-700">Médios</div>
-              </div>
-              <div className="bg-red-50 rounded-lg sm:rounded-xl p-2 sm:p-4">
-                <div className="text-xl sm:text-2xl font-bold text-red-600">
-                  {state.sessionStats.hard}
+                <div className="bg-red-50 rounded-lg sm:rounded-xl p-2 sm:p-4 border border-red-200">
+                  <div className="text-xl sm:text-2xl font-bold text-red-600">
+                    {state.sessionStats.hard}
+                  </div>
+                  <div className="text-xs sm:text-sm text-red-700 font-medium">Difíceis</div>
                 </div>
-                <div className="text-xs sm:text-sm text-red-700">Difíceis</div>
               </div>
-            </div>
 
-            <div className="grid grid-cols-1 sm:flex sm:flex-wrap sm:justify-center gap-2 sm:gap-4">
-              <button
-                onClick={handleShuffle}
-                className="px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600 text-white rounded-lg font-medium text-sm sm:text-base hover:bg-blue-700 transition-colors"
-              >
-                Estudar Novamente
-              </button>
-              <Link
-                href="/quiz"
-                className="px-4 sm:px-6 py-2.5 sm:py-3 bg-purple-600 text-white rounded-lg font-medium text-sm sm:text-base hover:bg-purple-700 transition-colors text-center"
-              >
-                Fazer Quiz
-              </Link>
-              <Link
-                href="/"
-                className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-medium text-sm sm:text-base hover:bg-gray-300 transition-colors text-center"
-              >
-                Voltar ao Início
-              </Link>
+              <div className="grid grid-cols-1 sm:flex sm:flex-wrap sm:justify-center gap-2 sm:gap-4">
+                <button
+                  onClick={handleShuffle}
+                  className="px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600 text-white rounded-lg font-medium text-sm sm:text-base hover:bg-blue-700 transition-colors"
+                >
+                  Estudar Novamente
+                </button>
+                <Link
+                  href="/quiz"
+                  className="px-4 sm:px-6 py-2.5 sm:py-3 bg-purple-600 text-white rounded-lg font-medium text-sm sm:text-base hover:bg-purple-700 transition-colors text-center"
+                >
+                  Fazer Quiz
+                </Link>
+                <Link
+                  href="/"
+                  className="px-4 sm:px-6 py-2.5 sm:py-3 bg-slate-200 text-slate-700 rounded-lg font-medium text-sm sm:text-base hover:bg-slate-300 transition-colors text-center"
+                >
+                  Voltar ao Início
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -201,65 +205,67 @@ function FlashcardsContent() {
 
   // Main Flashcard Screen - Mobile Optimized
   return (
-    <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
-      {/* Header */}
-      <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-8">
-        <div className="flex items-start justify-between">
-          <div className="min-w-0">
-            <h1 className="text-xl sm:text-3xl font-bold text-gray-900">Flashcards</h1>
-            <p className="text-gray-600 text-xs sm:text-base">
-              Clique no card para ver a resposta.
-            </p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        {/* Header */}
+        <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-8">
+          <div className="flex items-start justify-between">
+            <div className="min-w-0">
+              <h1 className="text-xl sm:text-3xl font-bold text-slate-900">Flashcards</h1>
+              <p className="text-slate-600 text-xs sm:text-base">
+                Clique no card para ver a resposta.
+              </p>
+            </div>
+            <button
+              onClick={handleShuffle}
+              className="flex-shrink-0 px-3 sm:px-4 py-2 bg-white text-slate-700 rounded-lg hover:bg-slate-100 transition-colors text-sm sm:text-base border border-slate-200 shadow-sm"
+            >
+              🔀 Embaralhar
+            </button>
           </div>
-          <button
-            onClick={handleShuffle}
-            className="flex-shrink-0 px-3 sm:px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm sm:text-base"
+
+          <select
+            value={state.selectedDomain}
+            onChange={(e) => handleDomainChange(e.target.value)}
+            className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-slate-300 rounded-lg bg-white text-slate-800 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
           >
-            🔀 Embaralhar
-          </button>
+            <option value="all">Todos os Domínios</option>
+            {domains.map((domain) => (
+              <option key={domain.id} value={domain.id}>
+                {domain.name}
+              </option>
+            ))}
+          </select>
         </div>
 
-        <select
-          value={state.selectedDomain}
-          onChange={(e) => handleDomainChange(e.target.value)}
-          className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg bg-white text-gray-700 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="all">Todos os Domínios</option>
-          {domains.map((domain) => (
-            <option key={domain.id} value={domain.id}>
-              {domain.name}
-            </option>
-          ))}
-        </select>
+        {/* Progress Bar */}
+        <div className="mb-4 sm:mb-8">
+          <div className="flex justify-between text-xs sm:text-sm text-slate-600 mb-2">
+            <span>Progresso</span>
+            <span className="font-medium">
+              {state.currentIndex + 1} / {state.cards.length}
+            </span>
+          </div>
+          <div className="w-full bg-slate-200 rounded-full h-1.5 sm:h-2">
+            <div
+              className="bg-blue-600 h-1.5 sm:h-2 rounded-full transition-all duration-300"
+              style={{
+                width: `${((state.currentIndex + 1) / state.cards.length) * 100}%`,
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Flashcard */}
+        <FlashcardViewer
+          flashcard={state.cards[state.currentIndex]}
+          onRate={handleRate}
+          showProgress={{
+            current: state.currentIndex + 1,
+            total: state.cards.length,
+          }}
+        />
       </div>
-
-      {/* Progress Bar */}
-      <div className="mb-4 sm:mb-8">
-        <div className="flex justify-between text-xs sm:text-sm text-gray-500 mb-2">
-          <span>Progresso</span>
-          <span>
-            {state.currentIndex + 1} / {state.cards.length}
-          </span>
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
-          <div
-            className="bg-blue-600 h-1.5 sm:h-2 rounded-full transition-all duration-300"
-            style={{
-              width: `${((state.currentIndex + 1) / state.cards.length) * 100}%`,
-            }}
-          />
-        </div>
-      </div>
-
-      {/* Flashcard */}
-      <FlashcardViewer
-        flashcard={state.cards[state.currentIndex]}
-        onRate={handleRate}
-        showProgress={{
-          current: state.currentIndex + 1,
-          total: state.cards.length,
-        }}
-      />
     </div>
   );
 }
