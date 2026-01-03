@@ -43,7 +43,7 @@ export default function QuizQuestion({
 
   const getOptionClass = (index: number) => {
     const baseClass =
-      'w-full p-4 rounded-lg border-2 text-left transition-all';
+      'w-full p-3 sm:p-4 rounded-lg border-2 text-left transition-all';
 
     if (!showResult) {
       if (selectedAnswer === index) {
@@ -65,12 +65,12 @@ export default function QuizQuestion({
   return (
     <div className="w-full max-w-3xl mx-auto">
       {showProgress && (
-        <div className="mb-4 flex items-center justify-between text-sm text-gray-500">
+        <div className="mb-3 sm:mb-4 flex items-center justify-between text-xs sm:text-sm text-gray-500">
           <span>
-            Questão {showProgress.current} de {showProgress.total}
+            {showProgress.current}/{showProgress.total}
           </span>
           <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${
+            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${
               difficultyColors[question.difficulty]
             }`}
           >
@@ -83,12 +83,12 @@ export default function QuizQuestion({
         </div>
       )}
 
-      <div className="bg-white rounded-2xl shadow-lg p-8">
-        <h3 className="text-xl font-semibold text-gray-800 mb-6">
+      <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-8">
+        <h3 className="text-base sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6">
           {question.question}
         </h3>
 
-        <div className="space-y-3 mb-6">
+        <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
           {question.options.map((option, index) => (
             <button
               key={index}
@@ -96,11 +96,11 @@ export default function QuizQuestion({
               className={getOptionClass(index)}
               disabled={showResult}
             >
-              <div className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm font-medium">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gray-100 flex items-center justify-center text-xs sm:text-sm font-medium">
                   {String.fromCharCode(65 + index)}
                 </span>
-                <span className="text-gray-700">{option}</span>
+                <span className="text-gray-700 text-sm sm:text-base">{option}</span>
               </div>
             </button>
           ))}
@@ -108,7 +108,7 @@ export default function QuizQuestion({
 
         {showResult && (
           <div
-            className={`p-4 rounded-lg mb-6 ${
+            className={`p-3 sm:p-4 rounded-lg mb-4 sm:mb-6 ${
               selectedAnswer === question.correctAnswer
                 ? 'bg-green-50 border border-green-200'
                 : 'bg-red-50 border border-red-200'
@@ -118,7 +118,7 @@ export default function QuizQuestion({
               {selectedAnswer === question.correctAnswer ? (
                 <>
                   <svg
-                    className="w-5 h-5 text-green-600"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-green-600"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -130,14 +130,14 @@ export default function QuizQuestion({
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="font-semibold text-green-700">
+                  <span className="font-semibold text-green-700 text-sm sm:text-base">
                     Correto!
                   </span>
                 </>
               ) : (
                 <>
                   <svg
-                    className="w-5 h-5 text-red-600"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-red-600"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -149,13 +149,13 @@ export default function QuizQuestion({
                       d="M6 18L18 6M6 6l12 12"
                     />
                   </svg>
-                  <span className="font-semibold text-red-700">
+                  <span className="font-semibold text-red-700 text-sm sm:text-base">
                     Incorreto
                   </span>
                 </>
               )}
             </div>
-            <p className="text-gray-700 text-sm">{question.explanation}</p>
+            <p className="text-gray-700 text-xs sm:text-sm">{question.explanation}</p>
           </div>
         )}
 
@@ -164,16 +164,16 @@ export default function QuizQuestion({
             <button
               onClick={handleSubmit}
               disabled={selectedAnswer === null}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600 text-white rounded-lg font-medium text-sm sm:text-base hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Verificar Resposta
+              Verificar
             </button>
           ) : (
             <button
               onClick={handleNext}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600 text-white rounded-lg font-medium text-sm sm:text-base hover:bg-blue-700 transition-colors"
             >
-              Próxima Questão
+              Próxima →
             </button>
           )}
         </div>

@@ -79,7 +79,7 @@ function QuizContent() {
     setSessionStats({ correct: 0, incorrect: 0 });
   };
 
-  // Quiz Setup Screen
+  // Quiz Setup Screen - Mobile Optimized
   if (!isStarted) {
     const availableQuestions =
       selectedDomain === 'all'
@@ -87,14 +87,14 @@ function QuizContent() {
         : getQuestionsByDomain(selectedDomain).length;
 
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">
               Configurar Quiz
             </h1>
 
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Domain Selection */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -103,14 +103,14 @@ function QuizContent() {
                 <select
                   value={selectedDomain}
                   onChange={(e) => setSelectedDomain(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg bg-white text-gray-700 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="all">Todos os Domínios ({questions.length} questões)</option>
+                  <option value="all">Todos ({questions.length} questões)</option>
                   {domains.map((domain) => {
                     const count = getQuestionsByDomain(domain.id).length;
                     return (
                       <option key={domain.id} value={domain.id}>
-                        {domain.name} ({count} questões)
+                        {domain.name} ({count})
                       </option>
                     );
                   })}
@@ -122,7 +122,7 @@ function QuizContent() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Número de Questões
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
                   {[5, 10, 20, 30, 50].map((count) => (
                     <button
                       key={count}
@@ -130,7 +130,7 @@ function QuizContent() {
                         setQuestionCount(Math.min(count, availableQuestions));
                         setCustomCount('');
                       }}
-                      className={`w-full px-4 py-3 rounded-lg font-medium transition-colors ${
+                      className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium text-sm sm:text-base transition-colors ${
                         questionCount === count && !customCount
                           ? 'bg-blue-600 text-white'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -143,7 +143,7 @@ function QuizContent() {
                 </div>
                 
                 {/* Custom count input */}
-                <div className="mt-3 flex items-center gap-3">
+                <div className="mt-3 flex items-center gap-2 sm:gap-3">
                   <input
                     type="number"
                     min="1"
@@ -157,33 +157,33 @@ function QuizContent() {
                         setQuestionCount(num);
                       }
                     }}
-                    placeholder="Ou digite um número..."
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Ou digite..."
+                    className="flex-1 px-3 sm:px-4 py-2 border border-gray-300 rounded-lg text-gray-700 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                  <span className="text-sm text-gray-500 whitespace-nowrap">
+                  <span className="text-xs sm:text-sm text-gray-500 whitespace-nowrap">
                     Máx: {availableQuestions}
                   </span>
                 </div>
-                <p className="text-sm text-gray-500 mt-2">
-                  {availableQuestions} questões disponíveis | Selecionadas: <strong>{questionCount}</strong>
+                <p className="text-xs sm:text-sm text-gray-500 mt-2">
+                  {availableQuestions} disponíveis | Selecionadas: <strong>{questionCount}</strong>
                 </p>
               </div>
 
               {/* Shuffle Options */}
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={shuffleOptions}
                     onChange={(e) => setShuffleOptions(e.target.checked)}
-                    className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
                   <span className="text-sm font-medium text-gray-700">
-                    Embaralhar ordem das alternativas
+                    Embaralhar alternativas
                   </span>
                 </label>
-                <span className="text-xs text-gray-500">
-                  (recomendado para simular prova real)
+                <span className="text-xs text-gray-500 ml-6 sm:ml-0">
+                  (recomendado)
                 </span>
               </div>
 
@@ -191,7 +191,7 @@ function QuizContent() {
               <button
                 onClick={startQuiz}
                 disabled={availableQuestions === 0}
-                className="w-full px-6 py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-6 py-3 sm:py-4 bg-blue-600 text-white rounded-lg font-semibold text-base sm:text-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Iniciar Quiz
               </button>
@@ -202,7 +202,7 @@ function QuizContent() {
     );
   }
 
-  // Quiz Complete Screen
+  // Quiz Complete Screen - Mobile Optimized
   if (isComplete) {
     const percentage = Math.round(
       (sessionStats.correct / currentQuestions.length) * 100
@@ -210,17 +210,17 @@ function QuizContent() {
     const passed = percentage >= 75;
 
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-white rounded-2xl shadow-lg p-8">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-8">
             <div
-              className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${
+              className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 ${
                 passed ? 'bg-green-100' : 'bg-red-100'
               }`}
             >
               {passed ? (
                 <svg
-                  className="w-10 h-10 text-green-600"
+                  className="w-8 h-8 sm:w-10 sm:h-10 text-green-600"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -234,7 +234,7 @@ function QuizContent() {
                 </svg>
               ) : (
                 <svg
-                  className="w-10 h-10 text-red-600"
+                  className="w-8 h-8 sm:w-10 sm:h-10 text-red-600"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -249,67 +249,67 @@ function QuizContent() {
               )}
             </div>
 
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">
               Quiz Completo!
             </h1>
-            <p className={`text-xl font-semibold mb-6 ${passed ? 'text-green-600' : 'text-red-600'}`}>
+            <p className={`text-lg sm:text-xl font-semibold mb-4 sm:mb-6 ${passed ? 'text-green-600' : 'text-red-600'}`}>
               {passed ? 'Parabéns! Você passou!' : 'Continue estudando!'}
             </p>
 
-            <div className="text-6xl font-bold text-gray-900 mb-2">
+            <div className="text-5xl sm:text-6xl font-bold text-gray-900 mb-1 sm:mb-2">
               {percentage}%
             </div>
-            <p className="text-gray-500 mb-8">
+            <p className="text-gray-500 mb-4 sm:mb-8 text-sm sm:text-base">
               {sessionStats.correct} de {currentQuestions.length} corretas
             </p>
 
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="bg-green-50 rounded-xl p-4">
-                <div className="text-2xl font-bold text-green-600">
+            <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-8">
+              <div className="bg-green-50 rounded-lg sm:rounded-xl p-3 sm:p-4">
+                <div className="text-xl sm:text-2xl font-bold text-green-600">
                   {sessionStats.correct}
                 </div>
-                <div className="text-sm text-green-700">Corretas</div>
+                <div className="text-xs sm:text-sm text-green-700">Corretas</div>
               </div>
-              <div className="bg-red-50 rounded-xl p-4">
-                <div className="text-2xl font-bold text-red-600">
+              <div className="bg-red-50 rounded-lg sm:rounded-xl p-3 sm:p-4">
+                <div className="text-xl sm:text-2xl font-bold text-red-600">
                   {sessionStats.incorrect}
                 </div>
-                <div className="text-sm text-red-700">Incorretas</div>
+                <div className="text-xs sm:text-sm text-red-700">Incorretas</div>
               </div>
             </div>
 
-            <div className="bg-blue-50 rounded-xl p-4 mb-8">
-              <p className="text-blue-700 text-sm">
+            <div className="bg-blue-50 rounded-lg sm:rounded-xl p-3 sm:p-4 mb-4 sm:mb-8">
+              <p className="text-blue-700 text-xs sm:text-sm">
                 {passed
                   ? 'O exame SnowPro requer 75% para aprovação. Você está no caminho certo!'
-                  : 'O exame SnowPro requer 75% para aprovação. Revise os flashcards e tente novamente!'}
+                  : 'Revise os flashcards e tente novamente!'}
               </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-4">
               <button
                 onClick={resetQuiz}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 bg-blue-600 text-white rounded-lg font-medium text-sm sm:text-base hover:bg-blue-700 transition-colors"
               >
                 Novo Quiz
               </button>
               <Link
                 href="/exam-simulator"
-                className="px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 bg-purple-600 text-white rounded-lg font-medium text-sm sm:text-base hover:bg-purple-700 transition-colors text-center"
               >
-                Simulado Real (65 questões)
+                Simulado
               </Link>
               <Link
                 href="/flashcards"
-                className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 bg-green-600 text-white rounded-lg font-medium text-sm sm:text-base hover:bg-green-700 transition-colors text-center"
               >
-                Estudar Flashcards
+                Flashcards
               </Link>
               <Link
                 href="/"
-                className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 bg-gray-200 text-gray-700 rounded-lg font-medium text-sm sm:text-base hover:bg-gray-300 transition-colors text-center"
               >
-                Voltar ao Início
+                Início
               </Link>
             </div>
           </div>
@@ -318,14 +318,14 @@ function QuizContent() {
     );
   }
 
-  // Quiz in Progress
+  // Quiz in Progress - Mobile Optimized
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Quiz</h1>
-          <p className="text-gray-600">
+      <div className="flex items-center justify-between gap-2 sm:gap-4 mb-4 sm:mb-8">
+        <div className="min-w-0">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Quiz</h1>
+          <p className="text-gray-600 text-sm sm:text-base truncate">
             {selectedDomain === 'all'
               ? 'Todos os domínios'
               : domains.find((d) => d.id === selectedDomain)?.name}
@@ -334,23 +334,23 @@ function QuizContent() {
 
         <button
           onClick={resetQuiz}
-          className="px-4 py-2 text-gray-600 hover:text-gray-900"
+          className="px-3 sm:px-4 py-2 text-gray-600 hover:text-gray-900 text-sm sm:text-base flex-shrink-0"
         >
           Cancelar
         </button>
       </div>
 
       {/* Progress Bar */}
-      <div className="mb-8">
-        <div className="flex justify-between text-sm text-gray-500 mb-2">
+      <div className="mb-4 sm:mb-8">
+        <div className="flex justify-between text-xs sm:text-sm text-gray-500 mb-2">
           <span>Progresso</span>
           <span>
-            {sessionStats.correct} corretas / {currentIndex} respondidas
+            ✓{sessionStats.correct} / {currentIndex} resp.
           </span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
           <div
-            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+            className="bg-blue-600 h-1.5 sm:h-2 rounded-full transition-all duration-300"
             style={{
               width: `${((currentIndex + 1) / currentQuestions.length) * 100}%`,
             }}
