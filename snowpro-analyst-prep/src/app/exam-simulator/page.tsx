@@ -22,6 +22,9 @@ interface ExamAnswer {
   flagged: boolean;
 }
 
+// Opções de quantidade de questões
+const QUESTION_COUNTS = [10, 20, 30, 50, 65];
+
 export default function ExamSimulatorPage() {
   const { recordQuizAnswer } = useProgress();
   const [examQuestions, setExamQuestions] = useState<Question[]>([]);
@@ -31,6 +34,8 @@ export default function ExamSimulatorPage() {
   const [isStarted, setIsStarted] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [showReview, setShowReview] = useState(false);
+  const [selectedQuestionCount, setSelectedQuestionCount] = useState(EXAM_CONFIG.totalQuestions);
+  const [customCount, setCustomCount] = useState('');
 
   // Timer
   useEffect(() => {
@@ -70,13 +75,20 @@ export default function ExamSimulatorPage() {
     return result;
   };
 
+  // Calcula tempo baseado na quantidade de questões (proporcional ao exame real)
+  const calculateTime = (questionCount: number) => {
+    // 65 questões = 115 minutos, proporcionalmente
+    const timePerQuestion = EXAM_CONFIG.timeMinutes / EXAM_CONFIG.totalQuestions;
+    return Math.ceil(timePerQuestion * questionCount);
+  };
+
   const startExam = () => {
-    // Usa seed baseado no timestamp para garantir aleatoriedade única
-    const seed = Date.now();
+    // Usa seed baseado no timestamp + random para garantir aleatoriedade única
+    const seed = Date.now() + Math.random() * 1000000;
     console.log(`[Simulado] Nova sessão iniciada - Seed: ${seed}`);
     
     // Seleciona questões com distribuição proporcional aos pesos do exame real
-    const selectedQuestions = getExamQuestions(EXAM_CONFIG.totalQuestions);
+    const selectedQuestions = getExamQuestions(selectedQuestionCount);
     
     console.log(`[Simulado] ${selectedQuestions.length} questões selecionadas de ${allQuestions.length} disponíveis`);
     
@@ -93,16 +105,19 @@ export default function ExamSimulatorPage() {
     });
 
     // Registra IDs das questões deste simulado no localStorage para tracking
-    const viewedIds = JSON.parse(localStorage.getItem('viewedQuestionIds') || '[]');
-    const newViewedIds = [...new Set([...viewedIds, ...shuffledQuestions.map(q => q.id)])];
+    const storedViewedIds = JSON.parse(localStorage.getItem('viewedQuestionIds') || '[]');
+    const newViewedIds = [...new Set([...storedViewedIds, ...shuffledQuestions.map(q => q.id)])];
     localStorage.setItem('viewedQuestionIds', JSON.stringify(newViewedIds));
     
     console.log(`[Simulado] Total de questões vistas até agora: ${newViewedIds.length}/${allQuestions.length}`);
 
+    // Calcula tempo proporcional
+    const examTime = calculateTime(selectedQuestionCount);
+    
     setExamQuestions(shuffledQuestions);
     setAnswers(new Map());
     setCurrentIndex(0);
-    setTimeRemaining(EXAM_CONFIG.timeMinutes * 60);
+    setTimeRemaining(examTime * 60);
     setIsStarted(true);
     setIsComplete(false);
     setShowReview(false);
@@ -210,13 +225,65 @@ export default function ExamSimulatorPage() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-6 sm:mb-8">
+              {/* Seleção de Quantidade de Questões */}
+              <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg sm:rounded-xl p-3 sm:p-4 mb-4 sm:mb-6">
+                <h3 className="font-semibold text-purple-300 mb-3 flex items-center gap-2 text-sm sm:text-base">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                  </svg>
+                  Quantidade de Questões
+                </h3>
+                <div className="grid grid-cols-5 gap-2 mb-3">
+                  {QUESTION_COUNTS.map((count) => (
+                    <button
+                      key={count}
+                      onClick={() => {
+                        setSelectedQuestionCount(count);
+                        setCustomCount('');
+                      }}
+                      className={`px-2 sm:px-4 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-base transition-all ${
+                        selectedQuestionCount === count && !customCount
+                          ? 'bg-purple-600 text-white border-2 border-purple-400'
+                          : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
+                      }`}
+                    >
+                      {count}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    min="5"
+                    max={stats.total}
+                    value={customCount}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setCustomCount(val);
+                      const num = parseInt(val, 10);
+                      if (!isNaN(num) && num >= 5 && num <= stats.total) {
+                        setSelectedQuestionCount(num);
+                      }
+                    }}
+                    placeholder="Ou digite..."
+                    className="flex-1 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                  <span className="text-purple-200/80 text-xs whitespace-nowrap">
+                    Máx: {stats.total}
+                  </span>
+                </div>
+                <p className="text-purple-200/60 text-xs mt-2">
+                  ⏱️ Tempo: <strong className="text-purple-300">{calculateTime(selectedQuestionCount)} min</strong> ({selectedQuestionCount === 65 ? 'igual ao exame real' : 'proporcional'})
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-6">
                 <div className="bg-white/5 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-white">{EXAM_CONFIG.totalQuestions}</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-white">{selectedQuestionCount}</div>
                   <div className="text-blue-200 text-xs sm:text-sm">Questões</div>
                 </div>
                 <div className="bg-white/5 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-white">{EXAM_CONFIG.timeMinutes}</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-white">{calculateTime(selectedQuestionCount)}</div>
                   <div className="text-blue-200 text-xs sm:text-sm">Minutos</div>
                 </div>
                 <div className="bg-white/5 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
